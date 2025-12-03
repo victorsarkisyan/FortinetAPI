@@ -5,27 +5,28 @@ import json
 import sys
 import urllib3
 
-# Disable insecure request warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
- 
+
 api_key = sys.argv[1]
 controller_ip = sys.argv[2]
 ap_id = sys.argv[3]
 
 url = f"https://{controller_ip}/api/v2/monitor/wifi/managed_ap"
-
-params = {
-    "wtp_id": ap_id
-}
-
+params = {"wtp_id": ap_id}
 headers = {
-  'Content-Type': 'application/json',
-  'Authorization': f'Bearer {api_key}'   
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {api_key}'
 }
 
-response = requests.get(url, headers=headers, params=params,  verify=False)
+response = requests.get(url, headers=headers, params=params, verify=False)
+results = response.json().get("results", [])
 
-output = response.json()
+lld_data = []
+if results:
+    for radio in results[0].get("radio", []):
+        lld_data.append({
+            "{#RADIOID}": radio.get("radio_id"),
+            "{#RADIOTYPE}": radio.get("radio_type")
+        })
 
-results = output.get("results", [])
-print(results[0]['radio'])
+print(json.dumps({"data": lld_data}))
