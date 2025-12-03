@@ -21,12 +21,12 @@ headers = {
 response = requests.get(url, headers=headers, params=params, verify=False)
 results = response.json().get("results", [])
 
-lld_data = []
-if results:
-    for radio in results[0].get("radio", []):
-        lld_data.append({
-            "{#RADIOID}": radio.get("radio_id"),
-            "{#RADIOTYPE}": radio.get("radio_type")
+lld_data = {"data": []}
+for radio in results[0]['radio']:
+    if radio.get("radio_type") and radio["radio_type"].lower() != "unknown":
+        lld_data["data"].append({
+            "{#RADIOID}": radio["radio_id"],
+            "{#RADIOTYPE}": radio["radio_type"]
         })
 
-print(json.dumps({"data": lld_data}))
+print(json.dumps(lld_data))
