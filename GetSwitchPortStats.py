@@ -9,9 +9,10 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 api_key = sys.argv[1]
-switch = sys.argv[2]
+controller_ip = sys.argv[2]
+switch = sys.argv[3]
 
-url = "https://192.168.0.1/api/v2/monitor/switch-controller/managed-switch/port-stats"
+url = f"https://{controller_ip}/api/v2/monitor/switch-controller/managed-switch/port-stats"
 
 params = {
      'mkey': switch
