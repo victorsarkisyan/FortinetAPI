@@ -22,5 +22,7 @@ response = requests.get(url, headers=headers, verify=False)
 
 output = response.json()
 
-AccessPoints = [item["name"] for item in output["results"]]
-print(", ".join(AccessPoints))
+results = output.get("results", [])
+
+for item in results:
+    print(f"- {item['name']}: {item['wtp_id']}")
