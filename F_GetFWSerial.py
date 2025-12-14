@@ -25,4 +25,4 @@ response = requests.get(url, headers=headers, params=params,  verify=False)
 
 output = response.json()
 
-print(output)
+print(output.get("serial"))
