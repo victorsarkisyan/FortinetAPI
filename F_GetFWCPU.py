@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 api_key = sys.argv[1]
 controller_ip = sys.argv[2]
 
-url = f"https://{controller_ip}/api/v2/monitor/system/status"
+url = f"https://{controller_ip}/api/v2/monitor/system/interface"
 
 params = {
 }
@@ -25,4 +25,4 @@ response = requests.get(url, headers=headers, params=params,  verify=False)
 
 output = response.json()
 
-print(output)
+print(json.dumps(output))

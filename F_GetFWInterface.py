@@ -11,16 +11,17 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 api_key = sys.argv[1]
 controller_ip = sys.argv[2]
 
-url = f"https://{controller_ip}/api/v2/monitor/wifi/managed_ap"
+url = f"https://{controller_ip}/api/v2/monitor/system/interface"
+
+params = {
+}
 
 headers = {
   'Content-Type': 'application/json',
   'Authorization': f'Bearer {api_key}'   
 }
-response = requests.get(url, headers=headers, verify=False)
+
+response = requests.get(url, headers=headers, params=params,  verify=False)
+
 output = response.json()
-print(output)
-# results = output.get("results", [])
-# print(results)
-# for item in results:
-#     print(f"- {item['name']}: {item['wtp_id']}")
+print(json.dumps(output))
