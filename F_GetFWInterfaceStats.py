@@ -24,5 +24,5 @@ headers = {
 response = requests.get(url, headers=headers, verify=False)
 data = response.json()
 
-lld = [{"{#IFNAME}": iface["name"]} for iface in data["results"].values()]
-print(json.dumps(lld))
+# Return the entire results so dependent items can extract metrics
+print(json.dumps(data["results"]))
