@@ -26,7 +26,13 @@ headers = {
 try:
     response = requests.get(url, headers=headers, params=params, verify=False)
     response.raise_for_status()
+
     data = response.json()
+
+    # flatten results list (FortiGate returns a list even for one switch)
+    if isinstance(data.get("results"), list) and len(data["results"]) == 1:
+        data["results"] = data["results"][0]
+
     print(json.dumps(data))
 
 except requests.exceptions.RequestException as e:

@@ -21,7 +21,14 @@ headers = {
   'Authorization': f'Bearer {api_key}'   
 }
 
-response = requests.get(url, headers=headers, params=params,  verify=False)
+response = requests.get(url, headers=headers, verify=False)
+data = response.json()
 
-output = response.json()
-print(json.dumps(output))
+# Only return interface names/IDs for discovery
+interfaces = []
+for ifname, details in data["results"].items():
+    interfaces.append({
+        "name": details["name"]
+    })
+
+print(json.dumps(interfaces))
