@@ -28,7 +28,7 @@ data = response.json()
 interfaces = []
 for ifname, details in data["results"].items():
     interfaces.append({
-        "name": details["name"]
+        "{#IFNAME}": details["name"]
     })
 
 print(json.dumps(interfaces))
